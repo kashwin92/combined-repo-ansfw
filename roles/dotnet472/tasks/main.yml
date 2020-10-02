@@ -1,0 +1,28 @@
+---
+# Creates temp folder in C: drive in Windows
+- name: .Net Framework 4.7.2 Install | Create temporary directory
+  win_file:
+    path: "{{ dotnet_temp_download_path }}"
+    state: directory
+
+# The DotNet 4.7.2 setup file is pulled from S3 bucket and stored in the temp folder created in the above task
+- name: .Net Framework 4.7.2 Install | Fetch .Net Framework 4.7.2 Application Setup
+  win_get_url:
+    url: "{{ dotnet_installation_source }}"
+    dest: "{{ dotnet_temp_download_path }}\\NDP472-DevPack-ENU.exe"
+
+# Runs a quiet install of DotNet 4.7.2 setup
+- name: .Net Framework 4.7.2 Install | Installation of .Net Framework 4.7.2 Developer Pack
+  win_shell: "{{ dotnet_temp_download_path }}\\NDP472-DevPack-ENU.exe /Q"
+  notify:
+    - reboot windows
+
+# Removes the temp folder created in the C: drive
+- name: .Net Framework 4.7.2 Install | Remove temporary directory
+  win_file:
+    path: "{{ dotnet_temp_download_path }}"
+    state: absent
+
+# All notified handlers are flushed to complete the configuration
+- name: run all notified handlers
+  meta: flush_handlers

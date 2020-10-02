@@ -1,0 +1,10 @@
+---
+# Temporary path to download the setup (.exe file) of DotNet 4.7.2
+dotnet_temp_download_path: C:\tmp
+
+# S3 bucket where Dotnet 4.7.2 setup file is available
+dotnet_installation_source: https://dotnet472-setup.s3.amazonaws.com/NDP472-DevPack-ENU.exe
+
+# Windows Reboot parameters
+windows_reboot_allowed: true
+windows_pending_reboot_fail: false
