@@ -1,5 +1,0 @@
----
- - name: Windows Ansible Playbook
-   hosts: "{{ host }}"
-   roles:
-   - 
